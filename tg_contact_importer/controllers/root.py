@@ -13,14 +13,10 @@ from contact_importer.providers import GoogleContactImporter, YahooContactImport
 class RootController(TGController):
     @expose('tg_contact_importer.templates.index')
     def index(self):
-        sample = DBSession.query(model.Sample).first()
-        return dict(sample=sample)
-
-    @expose('tg_contact_importer.templates.import')
-    def contacts(self):
+        print config.get('google.client_id')
         return dict()
 
-    @expose('tg_contact_importer.templates.contacts')
+    @expose('tg_contact_importer.templates.invite')
     def invite(self, provider):
         providers = {
             "google": GoogleContactImporter,
@@ -33,3 +29,6 @@ class RootController(TGController):
 
         provider_class = providers[provider]
         provider_inst = provider_class()
+
+        print config
+        print dir(config)
