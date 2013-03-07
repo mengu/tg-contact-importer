@@ -12,23 +12,30 @@ from contact_importer.providers import GoogleContactImporter, YahooContactImport
 
 class RootController(TGController):
     @expose('tg_contact_importer.templates.index')
-    def index(self):
-        print config.get('google.client_id')
+    def index(self, provider=None):
+        if provider is not None:
+            providers = {
+                "google": GoogleContactImporter,
+                "live": LiveContactImporter,
+                "yahoo": YahooContactImporter
+            }
+
+            if provider not in providers:
+                raise Exception("The provider %s is not supported." % provider)
+
+            client_id = config.get("%s.client_id" % provider)
+            client_secret = config.get("%s.client_secret" % provider)
+
+            if not client_id:
+                raise Exception("The provider %s is not supported." % provider)
+
+            provider_class = providers[provider]
+            provider_inst = provider_class(client_id, client_secret, url("/tg_contact_importer/invite?provider=%s" % provider)) 
+            return redirect(provider_inst.request_authorization())
+
         return dict()
 
     @expose('tg_contact_importer.templates.invite')
     def invite(self, provider):
-        providers = {
-            "google": GoogleContactImporter,
-            "live": LiveContactImporter,
-            "yahoo": YahooContactImporter
-        }
-
-        if provider not in providers:
-            raise Exception("Unsupported Provider")
-
-        provider_class = providers[provider]
-        provider_inst = provider_class()
-
-        print config
-        print dir(config)
+        pass
+        
