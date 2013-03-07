@@ -1,0 +1,4 @@
+recursive-include tg_contact_importer/public *
+recursive-include tg_contact_importer/templates *.html
+global-exclude *.pyc
+
