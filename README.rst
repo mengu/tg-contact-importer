@@ -21,28 +21,34 @@ In your application *config/app_cfg.py* import **plug**::
 
 Then at the *end of the file* call plug with tg_contact_importer::
 
-    plug(base_config, 'tg_contact_importer')
+    plug(base_config, 'tg_contact_importer', 'contacts')
 
 You will be able to access the registration process at
-*http://localhost:8080/tg_contact_importer*.
+*http://localhost:8080/contacts*.
 
-Available Hooks
-----------------------
+Configuring your application
+----------------------------
+In order to import contacts from Gmail, Live and Yahoo accounts you should follow these steps.
 
-tg_contact_importer makes available a some hooks which will be
-called during some actions to alter the default
-behavior of the appplications:
+1. Obtain a client id and client secret from providers above.
+2. Set your API credentials in your *.ini config files.
 
-Exposed Partials
-----------------------
+Following is a sample configuration:
 
-tg_contact_importer exposes a bunch of partials which can be used
-to render pieces of the blogging system anywhere in your
-application:
+    [app:main]
+    # other configurations..
+    google.client_id = my_google_client_id
+    google.client_secret = my_google_client_secret
+    live.client_id = my_live_client_id
+    live.client_secret = my_live_client_secret
+    yahoo.client_id = my_yahoo_client_id
+    yahoo.client_secret = my_yahoo_client_secret
 
 Exposed Templates
 --------------------
 
 The templates used by registration and that can be replaced with
 *tgext.pluggable.replace_template* are:
+
+    templates/invite.jinja
 
