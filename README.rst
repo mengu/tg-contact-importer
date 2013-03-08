@@ -35,7 +35,7 @@ In order to import contacts from Gmail, Live and Yahoo accounts you should follo
 
 Following is a sample configuration:
 
-.. code:: bash
+::
 
     [app:main]
     # other configurations..
