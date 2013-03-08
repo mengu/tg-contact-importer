@@ -35,6 +35,7 @@ In order to import contacts from Gmail, Live and Yahoo accounts you should follo
 
 Following is a sample configuration:
 
+
     [app:main]
     # other configurations..
     google.client_id = my_google_client_id
@@ -43,6 +44,7 @@ Following is a sample configuration:
     live.client_secret = my_live_client_secret
     yahoo.client_id = my_yahoo_client_id
     yahoo.client_secret = my_yahoo_client_secret
+
 
 Exposed Templates
 --------------------
