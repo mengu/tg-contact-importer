@@ -2,12 +2,13 @@
 """Main Controller"""
 
 from tg import TGController
-from tg import expose, flash, require, url, lurl, request, redirect, validate, config, session
+from tg import expose, url, lurl, request, redirect, config, session
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 
-from tg_contact_importer import model
-from tg_contact_importer.model import DBSession
-from contact_importer.providers import GoogleContactImporter, YahooContactImporter, LiveContactImporter
+from contact_importer.providers import (GoogleContactImporter, 
+                                        YahooContactImporter, 
+                                        LiveContactImporter)
+
 from tgext.pluggable.utils import plug_url
 
 providers = {
@@ -18,12 +19,9 @@ providers = {
 
 class RootController(TGController):
 
-    def _get_redirect_url(self, **kwargs):
+    def _get_redirect_url(self):
         provider = request.GET.get('provider')
         invite_url = plug_url("tg_contact_importer", "/invite?provider=%s" % provider)
-        if kwargs:
-            for param, value in kwargs.items():
-                invite_url += "&%s=%s" % (param, value)
         redirect_url = "%s://%s%s" % (request.scheme, request.host, invite_url)
         return redirect_url
 
